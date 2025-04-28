@@ -33,52 +33,58 @@ A backend REST API built using **FastAPI** to track personal growth habits with 
 
 1. **Clone the repository**
 
-```bash
-git clone https://github.com/Swap98/personal-growth-tracker-api.git
-cd personal-growth-tracker-api
-```
+   ```bash
+   git clone https://github.com/Swap98/personal-growth-tracker-api.git
+   cd personal-growth-tracker-api
+   ```
 
 2. **Create a virtual environment and activate it**
 
-```bash
-python -m venv venv
-# On Windows
-venv\Scripts\activate
-# On Mac/Linux
-source venv/bin/activate
-```
+   ```bash
+   python -m venv venv
+   ```
+
+   - On Windows:
+
+     ```bash
+     venv\Scripts\activate
+     ```
+
+   - On Mac/Linux:
+
+     ```bash
+     source venv/bin/activate
+     ```
 
 3. **Install dependencies**
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 4. **Run the server**
 
-```bash
-uvicorn main:app --reload
-```
+   ```bash
+   uvicorn main:app --reload
+   ```
 
 5. **Access the API docs**
 
-Visit:  
-[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+   Visit: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ---
 
 ## 🔐 Authentication
 
-- Register a user at `/users/register`
+- Register a user at `/users/`
 - Log in at `/users/login` to receive an access token
-- Authorize your requests using the token in `/docs` (Authorize button)
+- Authorize your requests using the token inside `/docs` (Authorize button)
 
 ---
 
 ## 📈 Future Improvements
 
 - Add Expense Tracking Module
-- Integrate a real Database (SQLite → PostgreSQL)
 - Add Habit Completion Tracking (habit streaks)
 - Deploy to Render / AWS / Railway
 
@@ -87,5 +93,3 @@ Visit:
 ## 📄 License
 
 This project is currently personal and private.
-
----
