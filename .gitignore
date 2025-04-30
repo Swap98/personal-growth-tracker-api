@@ -1,4 +1,29 @@
-venv/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+venv/
+
+# Environment variables
 .env
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/.next/
+frontend/.turbo/
+frontend/dist/
+
+# Logs and caches
+*.log
+*.sqlite3
+.cache/
+coverage/
+
+# VSCode / IDEs
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db

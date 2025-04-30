@@ -1,24 +1,23 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from fastapi.security import OAuth2PasswordRequestForm
+from typing import List
 
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+
+from app.core.database import SessionLocal
+from app.models.user import User
 from app.schemas.user_schema import UserCreate, UserResponse
 from app.schemas.token_schema import Token
-from app.core.database import SessionLocal
 from app.services.user_services import create_user, get_user_by_username
+from app.utils.hashing import hash_password, verify_password
 from app.utils.token import create_access_token
-from app.utils.hashing import verify_password
-from app.utils.hashing import hash_password
-
-from typing import List
-from app.models.user import User
 
 router = APIRouter(
     prefix="/users",
     tags=["users"]
 )
 
-# Dependency to get DB session
+# Dependency to provide a database session
 def get_db():
     db = SessionLocal()
     try:
@@ -26,7 +25,6 @@ def get_db():
     finally:
         db.close()
 
-# Create a new user directly into PostgreSQL
 @router.post("/", response_model=UserResponse)
 def create_new_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = create_user(db, user)
@@ -53,7 +51,6 @@ def update_user(user_id: int, updated_user: UserCreate, db: Session = Depends(ge
 
     db.commit()
     db.refresh(user)
-
     return user
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -69,7 +66,6 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     db.delete(user)
     db.commit()
 
-# Login user from PostgreSQL database
 @router.post("/login", response_model=Token)
 def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = get_user_by_username(db, user_credentials.username)

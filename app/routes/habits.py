@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.schemas.habit_schema import HabitCreate
-from app.utils.oauth2 import get_current_user
+
 from app.schemas.habit_schema import HabitCreate, HabitUpdate
+from app.utils.oauth2 import get_current_user
 
 router = APIRouter(
     prefix="/habits",
     tags=["habits"]
 )
 
-# Temporary in-memory storage for habits
+# In-memory placeholder for storing habits
 habits_db = []
 
 @router.post("/create")
@@ -20,7 +20,7 @@ def create_habit(habit: HabitCreate, current_user: str = Depends(get_current_use
         "description": habit.description
     }
     habits_db.append(new_habit)
-    return {"message": "Habit created successfully!", "habit": new_habit}
+    return {"message": "Habit created successfully", "habit": new_habit}
 
 @router.get("/")
 def get_habits(current_user: str = Depends(get_current_user)):
@@ -39,7 +39,7 @@ def delete_habit(habit_id: int, current_user: str = Depends(get_current_user)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Habit not found")
 
     habits_db.remove(habit_to_delete)
-    return {"message": f"Habit with id {habit_id} deleted successfully!"}
+    return {"message": f"Habit with id {habit_id} deleted successfully"}
 
 @router.put("/{habit_id}")
 def update_habit(habit_id: int, habit_update: HabitUpdate, current_user: str = Depends(get_current_user)):
@@ -54,8 +54,7 @@ def update_habit(habit_id: int, habit_update: HabitUpdate, current_user: str = D
 
     if habit_update.title is not None:
         habit_to_update["title"] = habit_update.title
-
     if habit_update.description is not None:
         habit_to_update["description"] = habit_update.description
 
-    return {"message": "Habit updated successfully!", "habit": habit_to_update}
+    return {"message": "Habit updated successfully", "habit": habit_to_update}

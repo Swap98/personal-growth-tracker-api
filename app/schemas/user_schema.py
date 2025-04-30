@@ -1,12 +1,12 @@
 from pydantic import BaseModel, EmailStr
 
-# Incoming request schema
+# Schema for incoming user registration requests
 class UserCreate(BaseModel):
     username: str
     email: EmailStr
     password: str
 
-# Response schema
+# Schema for outgoing user responses
 class UserResponse(BaseModel):
     id: int
     username: str

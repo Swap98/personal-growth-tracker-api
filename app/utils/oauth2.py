@@ -1,11 +1,14 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from app.utils.token import SECRET_KEY, ALGORITHM
 
+from app.utils.token import SECRET_KEY, ALGORITHM
+from fastapi.security import OAuth2PasswordBearer
+
+# Define the OAuth2 scheme
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+# Dependency to extract the current user from a JWT token
+def get_current_user(token: str = Depends(oauth2_scheme)) -> str:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
